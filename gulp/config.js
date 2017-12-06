@@ -26,7 +26,7 @@ var src = "./src/",
 -----------
 */
 module.exports = {
-    
+
     /* Project
     ----------
     Main project folders.
@@ -61,16 +61,9 @@ module.exports = {
             dist: dist + 'assets/videos/'
         },
         js: {
-            client: {
-                src: src + 'assets/js/',
-                build: build + 'assets/js/',
-                dist: dist + 'assets/js/',
-            },
-            admin: {
-                src: src + 'assets/js/admin/',
-                build: build + 'assets/js/admin/',
-                dist: dist + 'assets/js/admin/'
-            }
+            src: src + 'assets/js/',
+            build: build + 'assets/js/',
+            dist: dist + 'assets/js/',
         },
         scss: {
             src: src + 'assets/scss/'
@@ -102,18 +95,14 @@ module.exports = {
             src: src + 'assets/videos/**/*'
         },
         js: {
-            client: {
-                src: [
-                  src + 'assets/js/app.js'
-                ],
-            },
-            admin: {
-                src: src + 'assets/js/admin/**/*.js'
-            }
+            src: src + 'assets/js/**/*.js'
         },
         scss: {
             src: src + 'assets/scss/style.scss', // Main .scss file with @import's of all other .scss files!
             all: src + 'assets/scss/**/*.scss'   // Need this path to 'watch' all files for changes.
+        },
+        css: {
+            src: src + 'assets/css/**/*.css' // Have admin styles here.
         }
     },
 

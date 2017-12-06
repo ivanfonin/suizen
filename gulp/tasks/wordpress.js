@@ -35,20 +35,10 @@ gulp.task('screenshot', function() {
         .pipe(gulp.dest(config.project.build))
 })
 
-// Compile admin scripts.
-gulp.task('admin-js', function() {
-    return gulp.src(config.files.js.admin.src)
-        .pipe(gulp.dest(config.folders.js.admin.build))
-})
-
-//
-gulp.task('js', ['admin-js'], function() {
-    return gulp.src(config.files.js.client.src)
-        .pipe(plugins.sourcemaps.init())
-            .pipe(plugins.uglify())
-            .pipe(plugins.concat('app.min.js'))
-        .pipe(plugins.sourcemaps.write())
-        .pipe(gulp.dest(config.folders.js.client.build))
+// Copy javascript files.
+gulp.task('js', function() {
+    return gulp.src(config.files.js.src)
+        .pipe(gulp.dest(config.folders.js.build))
 })
 
 gulp.task('fonts', function() {
@@ -56,7 +46,12 @@ gulp.task('fonts', function() {
         .pipe(gulp.dest(config.folders.fonts.build))
 })
 
-gulp.task('scss', ['fonts'], () => {
+gulp.task('admin-css', ['fonts'], function() {
+    return gulp.src(config.files.css.src)
+        .pipe(gulp.dest(config.folders.css.build))
+})
+
+gulp.task('scss', ['admin-css'], () => {
     return gulp.src(config.files.scss.src)
         .pipe(plugins.sourcemaps.init())
             .pipe(plugins.sass())
