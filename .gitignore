@@ -1,0 +1,10 @@
+# Ignore all WordPress theme files in src/, build/ and dist/ folders.
+# Track only theme development workflow files.
+# Ignore .temp folder too.
+src/
+dist/
+build/
+node_modules/
+.temp
+.sass-cache
+npm-debug.log
