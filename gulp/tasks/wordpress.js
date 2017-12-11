@@ -5,6 +5,12 @@ var gulp = require('gulp'),
     plugins = require('gulp-load-plugins')({ camelize: true }),
     config = require('../config.js')
 
+// Copy readme file.
+gulp.task('readme', () => {
+    return gulp.src(config.project.src + 'readme.txt')
+        .pipe(gulp.dest(config.project.dist))
+})
+
 // Copy php files.
 gulp.task('php', () => {
     return gulp.src(config.files.php.src)
@@ -69,4 +75,4 @@ gulp.task('css', ['scss'], () => {
         .pipe(gulp.dest(config.project.dist))
 })
 
-gulp.task('wordpress', ['php', 'languages', 'images', 'videos', 'screenshot', 'js', 'css'])
+gulp.task('wordpress', ['readme', 'php', 'languages', 'images', 'videos', 'screenshot', 'js', 'css'])
