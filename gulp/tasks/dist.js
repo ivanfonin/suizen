@@ -6,58 +6,58 @@ var gulp = require('gulp'),
     config = require('../config.js')
 
 // Copy readme file.
-gulp.task('readme', () => {
+gulp.task('dist-readme', () => {
     return gulp.src(config.files.readme)
         .pipe(gulp.dest(config.project.dist))
 })
 
 // Copy php files.
-gulp.task('php', () => {
+gulp.task('dist-php', () => {
     return gulp.src(config.files.php.src)
         .pipe(gulp.dest(config.project.dist))
 })
 
 // Copy language files.
-gulp.task('languages', function() {
+gulp.task('dist-languages', () => {
     return gulp.src(config.files.languages.src)
         .pipe(gulp.dest(config.folders.languages.dist))
 })
 
 // Copy images.
-gulp.task('images', function() {
+gulp.task('dist-images', () => {
     return gulp.src(config.files.images.src)
         .pipe(gulp.dest(config.folders.images.dist))
 })
 
 // Copy video files.
-gulp.task('videos', function() {
+gulp.task('dist-videos', () => {
     return gulp.src(config.files.videos.src)
         .pipe(gulp.dest(config.folders.videos.dist))
 })
 
 // Copy screenshot.
-gulp.task('screenshot', function() {
+gulp.task('dist-screenshot', () => {
     return gulp.src(config.images.screenshot.src)
         .pipe(gulp.dest(config.project.dist))
 })
 
 // Copy javascript files.
-gulp.task('js', function() {
+gulp.task('dist-js', () => {
     return gulp.src(config.files.js.src)
         .pipe(gulp.dest(config.folders.js.dist))
 })
 
-gulp.task('fonts', function() {
+gulp.task('dist-fonts', () => {
     return gulp.src(config.files.fonts.src)
         .pipe(gulp.dest(config.folders.fonts.dist))
 })
 
-gulp.task('admin-css', ['fonts'], function() {
+gulp.task('dist-admin-css', ['dist-fonts'], () => {
     return gulp.src(config.files.css.src)
         .pipe(gulp.dest(config.folders.css.dist))
 })
 
-gulp.task('scss', ['admin-css'], () => {
+gulp.task('dist-scss', ['dist-admin-css'], () => {
     return gulp.src(config.files.scss.src)
         .pipe(plugins.sourcemaps.init())
             .pipe(plugins.sass())
@@ -69,10 +69,10 @@ gulp.task('scss', ['admin-css'], () => {
         .pipe(gulp.dest(config.project.temp))
 })
 
-gulp.task('css', ['scss'], () => {
+gulp.task('dist-css', ['dist-scss'], () => {
     return gulp.src([config.project.src + 'style.css', config.project.temp + 'style.css'])
         .pipe(plugins.concat('style.css'))
         .pipe(gulp.dest(config.project.dist))
 })
 
-gulp.task('wordpress', ['readme', 'php', 'languages', 'images', 'videos', 'screenshot', 'js', 'css'])
+gulp.task('wordpress', ['dist-readme', 'dist-php', 'dist-languages', 'dist-images', 'dist-videos', 'dist-screenshot', 'dist-js', 'dist-css'])

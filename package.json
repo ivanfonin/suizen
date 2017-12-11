@@ -4,7 +4,7 @@
   "description": "Another simple WordPress theme development workflow which I use when creating themes especially for wordpress.org directory.",
   "scripts": {
     "build": "gulp build",
-    "production": "gulp wordpress",
+    "production": "gulp dist",
     "clean": "gulp clean",
     "watch": "gulp"
   },
