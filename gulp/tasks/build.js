@@ -12,46 +12,36 @@ gulp.task('php', () => {
 })
 
 // Copy language files.
-gulp.task('languages', function() {
+gulp.task('languages', () => {
     return gulp.src(config.files.languages.src)
         .pipe(gulp.dest(config.folders.languages.build))
 })
 
 // Copy images.
-gulp.task('images', function() {
+gulp.task('images', () => {
     return gulp.src(config.files.images.src)
         .pipe(gulp.dest(config.folders.images.build))
 })
 
 // Copy video files.
-gulp.task('videos', function() {
+gulp.task('videos', () => {
     return gulp.src(config.files.videos.src)
         .pipe(gulp.dest(config.folders.videos.build))
 })
 
 // Copy screenshot.
-gulp.task('screenshot', function() {
+gulp.task('screenshot', () => {
     return gulp.src(config.images.screenshot.src)
         .pipe(gulp.dest(config.project.build))
 })
 
 // Compile admin scripts.
-gulp.task('admin-js', function() {
+gulp.task('js', () => {
     return gulp.src(config.files.js.admin.src)
         .pipe(gulp.dest(config.folders.js.admin.build))
 })
 
-//
-gulp.task('js', ['admin-js'], function() {
-    return gulp.src(config.files.js.client.src)
-        .pipe(plugins.sourcemaps.init())
-            .pipe(plugins.uglify())
-            .pipe(plugins.concat('app.min.js'))
-        .pipe(plugins.sourcemaps.write())
-        .pipe(gulp.dest(config.folders.js.client.build))
-})
-
-gulp.task('fonts', function() {
+gulp.task('fonts', () => {
     return gulp.src(config.files.fonts.src)
         .pipe(gulp.dest(config.folders.fonts.build))
 })
