@@ -79,6 +79,7 @@ module.exports = {
     All PHP files, languages, scripts, fonts, images and styles source files of the WordPress theme.
     */
     files: {
+        readme: src + 'readme.txt',
         languages: {
             src: src + 'languages/**/*'
         },

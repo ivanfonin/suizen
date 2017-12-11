@@ -7,7 +7,7 @@ var gulp = require('gulp'),
 
 // Copy readme file.
 gulp.task('readme', () => {
-    return gulp.src(config.project.src + 'readme.txt')
+    return gulp.src(config.files.readme)
         .pipe(gulp.dest(config.project.dist))
 })
 
