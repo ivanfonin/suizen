@@ -59,13 +59,13 @@ gulp.task('dist-admin-css', ['dist-fonts'], () => {
 
 gulp.task('dist-scss', ['dist-admin-css'], () => {
     return gulp.src(config.files.scss.src)
-        .pipe(plugins.sourcemaps.init())
+        //.pipe(plugins.sourcemaps.init())
             .pipe(plugins.sass())
             .on('error', config.logErrors)
             .pipe(plugins.postcss([ autoprefixer({ browsers: ['last 2 versions'] }) ]))
             // One change with 'build' task - not minifying css file for wordpress.org
             //.pipe(plugins.cleanCss()) -
-        .pipe(plugins.sourcemaps.write())
+        //.pipe(plugins.sourcemaps.write())
         .pipe(gulp.dest(config.project.temp))
 })
 

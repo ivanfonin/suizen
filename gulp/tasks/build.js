@@ -46,7 +46,12 @@ gulp.task('fonts', () => {
         .pipe(gulp.dest(config.folders.fonts.build))
 })
 
-gulp.task('scss', ['fonts'], () => {
+gulp.task('admin-css', ['fonts'], () => {
+    return gulp.src(config.files.css.src)
+        .pipe(gulp.dest(config.folders.css.build))
+})
+
+gulp.task('scss', ['admin-css'], () => {
     return gulp.src(config.files.scss.src)
         .pipe(plugins.sourcemaps.init())
             .pipe(plugins.sass())
