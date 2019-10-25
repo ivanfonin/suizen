@@ -7,6 +7,7 @@ var gulp = require( 'gulp' ),
     cleancss = require( 'gulp-clean-css' ),
     uglify = require( 'gulp-uglify' ),
     rename = require( 'gulp-rename' ),
+    imagemin = require( 'gulp-imagemin' ),
     concat = require( 'gulp-concat' ),
     config = require( '../config.js' );
 
@@ -28,9 +29,10 @@ gulp.task( 'dist-languages', () => {
         .pipe( gulp.dest( config.folders.languages.dist ) );
 } );
 
-// Copy images.
+// Optimize and copy images.
 gulp.task( 'dist-images', () => {
     return gulp.src( config.files.images.src )
+        .pipe( imagemin() )
         .pipe( gulp.dest( config.folders.images.dist ) );
 } );
 
@@ -40,9 +42,10 @@ gulp.task( 'dist-videos', () => {
         .pipe( gulp.dest( config.folders.videos.dist ) );
 } );
 
-// Copy screenshot.
+// Optimize and copy screenshot.
 gulp.task( 'dist-screenshot', () => {
-    return gulp.src( config.images.screenshot.src )
+    return gulp.src( config.files.images.screenshot )
+        .pipe( imagemin() )
         .pipe( gulp.dest( config.project.dist ) );
 } );
 
@@ -57,16 +60,19 @@ gulp.task( 'dist-js', () => {
         .pipe( gulp.dest( config.folders.js.dist ) );
 } );
 
+// Copy fonts.
 gulp.task( 'dist-fonts', () => {
     return gulp.src( config.files.fonts.src )
         .pipe( gulp.dest( config.folders.fonts.dist ) );
 } );
 
+// Copy admin css files.
 gulp.task( 'dist-admin-css', () => {
     return gulp.src( config.files.css.src )
         .pipe( gulp.dest( config.folders.css.dist ) );
 } );
 
+// Compile SASS.
 gulp.task( 'dist-scss', () => {
     return gulp.src( config.files.scss.src )
         .pipe( sass() ).on( 'error', sass.logError )
@@ -76,12 +82,14 @@ gulp.task( 'dist-scss', () => {
         .pipe( gulp.dest( config.project.temp) );
 } );
 
+// Generate theme style.css file.
 gulp.task( 'dist-css', () => {
     return gulp.src( [ config.project.src + 'style.css', config.project.temp + 'style.css' ] )
         .pipe( concat( 'style.css' ) )
         .pipe( gulp.dest( config.project.dist ) );
 } );
 
+// Production task.
 gulp.task( 'production',
     gulp.series(
         'dist-admin-css', 'dist-scss', 'dist-css',

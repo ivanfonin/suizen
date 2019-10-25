@@ -90,7 +90,8 @@ module.exports = {
             src: src + 'assets/fonts/**/*'
         },
         images: {
-            src: src + 'assets/images/**/*(*.png|*.jpg|*.jpeg|*.gif|*.svg)'
+            src: src + 'assets/images/**/*(*.png|*.jpg|*.jpeg|*.gif|*.svg)',
+            screenshot: src + 'screenshot.png'
         },
         videos: {
             src: src + 'assets/videos/**/*'
@@ -104,21 +105,6 @@ module.exports = {
         },
         css: {
             src: src + 'assets/css/**/*.css' // Have admin styles here.
-        }
-    },
-
-    /* Images
-    ---------
-    Images optimization settings for 'gulp-imagemin' plugin.
-    */
-    images: {
-        imagemin: {
-            optimizationLevel: 7,
-            progressive: true,
-            interlaced: true
-        },
-        screenshot: {
-            src: src + 'screenshot.png'
         }
     },
 
