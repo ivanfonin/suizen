@@ -30,7 +30,7 @@ function watch( done ) {
 
     gulp.watch( config.files.js.src, gulp.series( 'js', reload ) );
 
-    gulp.watch( config.files.scss.all, gulp.series( 'css', reload ) );
+    gulp.watch( config.files.scss.all, gulp.series( 'admin-css', 'scss', 'css', reload ) );
 
     done();
 }
