@@ -8,7 +8,7 @@ Gulp configuration file for the Themegulper workflow.
 --------
 theme - Name of your WordPress theme.
 */
-var theme = "damo";
+var theme = "yourthemename";
 
 /* Paths
 --------
@@ -17,10 +17,10 @@ build - Working version of your theme for testing purposes.
 dist  - Distribution version of the WordPress theme with minified styles, scripts, etc.
 .temp - Temporary folder. Remove it with 'gulp clean' command.
 */
-var src = "./src/",
-    build = "./build/" + theme + "/",
-    dist = "./dist/" + theme + "/",
-    temp = "./.temp/";
+var src   = `./src/`,
+    build = `./build/${theme}/`, // I usually 'build' theme to my local WordPress installation themes directory.
+    dist  = `./dist/${theme}/`,
+    temp  = `./.temp/`;
 
 /* Settings
 -----------
@@ -32,10 +32,10 @@ module.exports = {
     Main project folders.
     */
     project: {
-        src: src,
-        build: build,
-        dist: dist,
-        temp: temp
+        src   : src,
+        build : build,
+        dist  : dist,
+        temp  : temp
     },
 
     /* Folders
@@ -127,15 +127,9 @@ module.exports = {
     Browsersync settings.
     */
     browsersync: {
-      open: 'external',
-      host: 'damo.dev',
-      proxy: 'damo.dev',
-      port: 8080
-    },
+        open  : 'external',
+        proxy : `http://${theme}.dev-local`,
+        port  : 8080
+    }
 
-    /* Handle Errors
-    ----------------
-    Assign module with gulp-notify plugin to config.logErrors.
-    */
-    logErrors: require('./lib/logErrors')
 };

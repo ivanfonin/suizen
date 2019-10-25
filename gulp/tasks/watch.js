@@ -1,63 +1,39 @@
-'use strict'
+'use strict';
 
-var gulp = require('gulp'),
-    browsersync = require('browser-sync'),
-    config = require('../config.js')
+var gulp = require( 'gulp' ),
+    browsersync = require( 'browser-sync' ),
+    config = require( '../config.js' );
 
-// Start Browsersync.
-gulp.task('browsersync', () => {
-    browsersync(config.browsersync);
-});
+const server = browsersync.create();
+
+// Reload browsersync server.
+function reload( done ) {
+    server.reload();
+    done();
+}
+
+// Start brosersync server.
+function serve( done ) {
+    server.init( config.browsersync );
+    done();
+}
+
+// Watch files for changes and reload browsersync server.
+function watch( done ) {
+    gulp.watch( config.files.php.src, gulp.series( 'php', reload ) );
+
+    gulp.watch( config.files.languages.src, gulp.series( 'languages', reload ) );
+
+    gulp.watch( config.files.fonts.src, gulp.series( 'fonts', reload ) );
+
+    gulp.watch( config.files.images.src, gulp.series( 'images', reload ) );
+
+    gulp.watch( config.files.js.src, gulp.series( 'js', reload ) );
+
+    gulp.watch( config.files.scss.all, gulp.series( 'css', reload ) );
+
+    done();
+}
 
 // Watch task.
-gulp.task('watch', ['browsersync'], () => {
-
-    gulp.watch(config.files.php.src, ['watch-php'])
-
-    gulp.watch(config.files.languages.src, ['watch-languages'])
-
-    gulp.watch(config.files.fonts.src, ['watch-fonts'])
-
-    gulp.watch(config.files.images.src, ['watch-images'])
-
-    gulp.watch(config.files.js.src, ['watch-js'])
-
-    gulp.watch(config.files.scss.all, ['watch-css'])
-
-})
-
-// Reload browsers when 'php' task is done.
-gulp.task('watch-php', ['php'], (done) => {
-    browsersync.reload()
-    done()
-})
-
-// Reload browsers when 'languages' task is done.
-gulp.task('watch-languages', ['languages'], (done) => {
-    browsersync.reload()
-    done()
-})
-
-// Reload browsers when 'fonts' task is done.
-gulp.task('watch-fonts', ['fonts'], (done) => {
-    browsersync.reload()
-    done()
-})
-
-// Reload browsers when 'images' task is done.
-gulp.task('watch-images', ['images'], (done) => {
-    browsersync.reload()
-    done()
-})
-
-// Reload browsers when 'js' task is done.
-gulp.task('watch-js', ['js'], (done) => {
-    browsersync.reload()
-    done()
-})
-
-// Reload browsers when 'css' task is done.
-gulp.task('watch-css', ['css'], (done) => {
-    browsersync.reload()
-    done()
-})
+gulp.task( 'watch' , gulp.series( serve, watch ) );
