@@ -1,15 +1,16 @@
 'use strict';
 
-var gulp = require( 'gulp' ),
-    autoprefixer = require( 'autoprefixer' ),
-    sass = require( 'gulp-sass' ),
-    postcss = require( 'gulp-postcss' ),
-    cleancss = require( 'gulp-clean-css' ),
-    uglify = require( 'gulp-uglify' ),
-    rename = require( 'gulp-rename' ),
-    imagemin = require( 'gulp-imagemin' ),
-    concat = require( 'gulp-concat' ),
-    config = require( '../config.js' );
+var gulp            = require( 'gulp' ),
+    autoprefixer    = require( 'autoprefixer' ),
+    sass            = require( 'gulp-sass' ),
+    postcss         = require( 'gulp-postcss' ),
+    cleancss        = require( 'gulp-clean-css' ),
+    uglify          = require( 'gulp-uglify' ),
+    plumber         = require( 'gulp-plumber' ),
+    rename          = require( 'gulp-rename' ),
+    imagemin        = require( 'gulp-imagemin' ),
+    concat          = require( 'gulp-concat' ),
+    config          = require( '../config.js' );
 
 // Copy readme file.
 gulp.task( 'dist-readme', () => {
@@ -52,6 +53,7 @@ gulp.task( 'dist-screenshot', () => {
 // Copy javascript files.
 gulp.task( 'dist-js', () => {
     return gulp.src( config.files.js.src )
+        .pipe( plumber() )
         // Copy unminified scripts.
         .pipe( gulp.dest( config.folders.js.dist ) )
         // Create minified scripts for production.
@@ -66,33 +68,32 @@ gulp.task( 'dist-fonts', () => {
         .pipe( gulp.dest( config.folders.fonts.dist ) );
 } );
 
-// Copy admin css files.
-gulp.task( 'dist-admin-css', () => {
-    return gulp.src( config.files.css.src )
+// Copy print.css file.
+gulp.task( 'dist-print-css', ( done ) => {
+    return gulp.src( config.files.scss.printCss )
+        .pipe( gulp.dest( config.project.dist ) );
+} );
+
+// Compile editor style blocks CSS.
+gulp.task( 'dist-editor-style-blocks', () => {
+    return gulp.src( config.files.scss.editorStyleBlocks )
+        .pipe( sass() ).on( 'error', sass.logError )
+        .pipe( postcss( [ autoprefixer() ] ) )
         .pipe( gulp.dest( config.folders.css.dist ) );
 } );
 
-// Compile SASS.
+// Compile theme CSS.
 gulp.task( 'dist-scss', () => {
     return gulp.src( config.files.scss.src )
         .pipe( sass() ).on( 'error', sass.logError )
         .pipe( postcss( [ autoprefixer() ] ) )
-        // One change with 'build' task - not minifying css file for wordpress.org
-        //.pipe( cleancss() )
-        .pipe( gulp.dest( config.project.temp) );
-} );
-
-// Generate theme style.css file.
-gulp.task( 'dist-css', () => {
-    return gulp.src( [ config.project.src + 'style.css', config.project.temp + 'style.css' ] )
-        .pipe( concat( 'style.css' ) )
         .pipe( gulp.dest( config.project.dist ) );
 } );
 
 // Production task.
 gulp.task( 'production',
     gulp.series(
-        'dist-admin-css', 'dist-scss', 'dist-css',
+        'dist-print-css', 'dist-editor-style-blocks', 'dist-scss',
         gulp.parallel( 'dist-readme', 'dist-php', 'dist-languages', 'dist-images', 'dist-videos', 'dist-screenshot', 'dist-js', 'dist-fonts' )
     )
 );
