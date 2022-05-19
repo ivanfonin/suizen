@@ -8,7 +8,7 @@ Gulp configuration file for the Themegulper workflow.
 --------
 theme - Name of your WordPress theme.
 */
-var theme = "yourthemename";
+var theme = "manifestum";
 
 /* Paths
 --------
@@ -101,6 +101,8 @@ module.exports = {
         },
         scss: {
             src: src + 'assets/scss/style.scss', // Main .scss file with @import's of all other .scss files!
+            print: src + 'assets/scss/print.scss',
+            editorStyleBlocks: src + 'assets/scss/editor-style-blocks.scss',
             all: src + 'assets/scss/**/*.scss'   // Need this path to 'watch' all files for changes.
         },
         css: {

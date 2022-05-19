@@ -8,7 +8,6 @@ var gulp            = require( 'gulp' ),
     uglify          = require( 'gulp-uglify' ),
     plumber         = require( 'gulp-plumber' ),
     rename          = require( 'gulp-rename' ),
-    imagemin        = require( 'gulp-imagemin' ),
     concat          = require( 'gulp-concat' ),
     config          = require( '../config.js' );
 
@@ -30,23 +29,15 @@ gulp.task( 'dist-languages', () => {
         .pipe( gulp.dest( config.folders.languages.dist ) );
 } );
 
-// Optimize and copy images.
-gulp.task( 'dist-images', () => {
-    return gulp.src( config.files.images.src )
-        .pipe( imagemin() )
-        .pipe( gulp.dest( config.folders.images.dist ) );
-} );
-
 // Copy video files.
 gulp.task( 'dist-videos', () => {
     return gulp.src( config.files.videos.src )
         .pipe( gulp.dest( config.folders.videos.dist ) );
 } );
 
-// Optimize and copy screenshot.
+// Copy screenshot.
 gulp.task( 'dist-screenshot', () => {
     return gulp.src( config.files.images.screenshot )
-        .pipe( imagemin() )
         .pipe( gulp.dest( config.project.dist ) );
 } );
 
@@ -94,6 +85,6 @@ gulp.task( 'dist-scss', () => {
 gulp.task( 'production',
     gulp.series(
         'dist-print-css', 'dist-editor-style-blocks', 'dist-scss',
-        gulp.parallel( 'dist-readme', 'dist-php', 'dist-languages', 'dist-images', 'dist-videos', 'dist-screenshot', 'dist-js', 'dist-fonts' )
+        gulp.parallel( 'dist-readme', 'dist-php', 'dist-languages', 'dist-videos', 'dist-screenshot', 'dist-js', 'dist-fonts' )
     )
 );

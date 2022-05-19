@@ -3,7 +3,7 @@
 var gulp            = require( 'gulp' ),
     sourcemaps      = require( 'gulp-sourcemaps' ),
     autoprefixer    = require( 'autoprefixer' ),
-    sass            = require( 'gulp-sass' ),
+    sass            = require( 'gulp-sass' )(require('sass')),
     postcss         = require( 'gulp-postcss' ),
     cleancss        = require( 'gulp-clean-css' ),
     uglify          = require( 'gulp-uglify' ),
@@ -14,7 +14,7 @@ var gulp            = require( 'gulp' ),
 
 // Copy php files.
 gulp.task( 'readme', () => {
-    return gulp.src( config.files.readme )
+    return gulp.src( config.files.readme, {"allowEmpty": true} )
         .pipe( gulp.dest( config.project.build ) );
 } );
 
@@ -44,7 +44,7 @@ gulp.task( 'videos', () => {
 
 // Copy screenshot.
 gulp.task( 'screenshot', () => {
-    return gulp.src( config.images.screenshot.src )
+    return gulp.src( config.files.images.screenshot, {"allowEmpty": true} )
         .pipe( gulp.dest( config.project.build ) );
 } );
 
@@ -70,13 +70,15 @@ gulp.task( 'fonts', () => {
 
 // Copy print.css file.
 gulp.task( 'print-css', ( done ) => {
-    return gulp.src( config.files.scss.printCss )
+    return gulp.src( config.files.scss.print, {"allowEmpty": true} )
+        .pipe( sass() ).on( 'error', sass.logError )
+        .pipe( postcss( [ autoprefixer() ] ) )
         .pipe( gulp.dest( config.project.build ) );
 } );
 
 // Build editor style blocks CSS.
 gulp.task( 'editor-style-blocks', () => {
-    return gulp.src( config.files.scss.editorStyleBlocks )
+    return gulp.src( config.files.scss.editorStyleBlocks, {"allowEmpty": true} )
         .pipe( sourcemaps.init() )
         .pipe( sass() ).on( 'error', sass.logError )
         .pipe( postcss( [ autoprefixer() ] ) )
